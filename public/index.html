@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatApp</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+</head>
+<body>
+  <!-- Auth Screen -->
+  <div id="auth-screen" class="screen active">
+    <div class="auth-container">
+      <div class="auth-logo">💬</div>
+      <h1>ChatApp</h1>
+      <p class="auth-subtitle">Real-time messaging</p>
+      
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Login</button>
+        <button class="auth-tab" data-tab="register">Register</button>
+      </div>
+
+      <form id="login-form" class="auth-form active">
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" placeholder="Enter username" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+        <p id="login-error" class="error-message"></p>
+      </form>
+
+      <form id="register-form" class="auth-form">
+        <div class="form-group">
+          <label for="register-username">Username</label>
+          <input type="text" id="register-username" placeholder="Choose a username" required autocomplete="username" minlength="3" maxlength="30">
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" placeholder="Choose a password" required autocomplete="new-password" minlength="6">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        <p id="register-error" class="error-message"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chat Screen -->
+  <div id="chat-screen" class="screen">
+    <div class="chat-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2>💬 ChatApp</h2>
+          <div class="user-info">
+            <span id="current-username" class="username"></span>
+            <button id="logout-btn" class="btn btn-icon" title="Logout">🚪</button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="section-header">
+            <h3>Rooms</h3>
+            <button id="create-room-btn" class="btn btn-icon" title="Create room">+</button>
+          </div>
+          <div id="rooms-list" class="rooms-list"></div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="section-header">
+            <h3>Online Users</h3>
+            <span id="online-count" class="badge">0</span>
+          </div>
+          <div id="online-users-list" class="online-users-list"></div>
+        </div>
+      </aside>
+
+      <!-- Main Chat Area -->
+      <main class="chat-main">
+        <div id="no-room-selected" class="no-room-selected">
+          <div class="empty-state">
+            <div class="empty-icon">💬</div>
+            <h2>Welcome to ChatApp</h2>
+            <p>Select a room from the sidebar or create a new one to start chatting</p>
+          </div>
+        </div>
+
+        <div id="chat-container" class="chat-container">
+          <header class="chat-header">
+            <h2 id="chat-room-name"></h2>
+            <span id="chat-room-info" class="chat-room-info"></span>
+          </header>
+
+          <div id="messages-container" class="messages-container">
+            <div id="messages-list" class="messages-list"></div>
+            <div id="typing-indicator" class="typing-indicator"></div>
+          </div>
+
+          <div class="chat-input-area">
+            <form id="message-form" class="message-form">
+              <input 
+                type="text" 
+                id="message-input" 
+                placeholder="Type a message..." 
+                autocomplete="off"
+                maxlength="2000"
+              >
+              <button type="submit" class="btn btn-primary btn-send" title="Send">➤</button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Create Room Modal -->
+  <div id="create-room-modal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h3>Create New Room</h3>
+      <form id="create-room-form">
+        <div class="form-group">
+          <label for="room-name-input">Room Name</label>
+          <input type="text" id="room-name-input" placeholder="Enter room name" required minlength="2" maxlength="50">
+        </div>
+        <p id="create-room-error" class="error-message"></p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-create-room">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
