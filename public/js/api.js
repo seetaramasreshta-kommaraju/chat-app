@@ -1,5 +1,5 @@
 const API = {
-  baseUrl: '',
+  baseUrl: CONFIG.API_URL,
 
   getToken() {
     return localStorage.getItem('chat_token');

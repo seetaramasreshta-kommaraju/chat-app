@@ -216,7 +216,7 @@ function connectSocket() {
     state.socket.disconnect();
   }
 
-  state.socket = io({
+  state.socket = io(CONFIG.SOCKET_URL, {
     auth: { token: state.token },
   });
 
